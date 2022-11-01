@@ -20,7 +20,7 @@ const authUser = asyncHandler(async(req,res)=>{
                     res.json(user)
                 }else{
                     res.status(400);
-                    thro
+                    throw new Error('invalid role or password')
                 }
             }
         }
