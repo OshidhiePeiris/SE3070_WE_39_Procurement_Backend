@@ -4,13 +4,13 @@ import Product  from '../models/Product.js';
 //create product
 const createProduct = asyncHandler(async(req,res)=>{
     const newProduct = new Product ({
-        name : 'Product',
-        image:'images/sample.jpg',
-        supplier:'Supplier',
-        supplierMobile : 0,
-        description: 'Product description',
-        price: 0,
-        quantity: 0
+        name : req.body.name,
+        image:req.body.image,
+        supplier:req.body.supplier,
+        supplierMobile : req.body.supplierMobile,
+        description: req.body.description,
+        price: req.body.price,
+        quantity: req.body.quantity
 
     })
     const createProduct = await newProduct.save();
@@ -29,7 +29,7 @@ const getProducts = asyncHandler (async(req,res)=>{
 //delete product
 const deleteProduct = asyncHandler(async(req,res)=>{
     await Product.findByIdAndDelete(req.params.id).then(()=>{
-        res.status(200)
+        res.status(200).json("deleted")
     }).catch((err)=>{
         console.log(err);
     })
@@ -54,7 +54,7 @@ const updateProduct = asyncHandler(async(req,res)=>{
 })
 //get product details of a product
 const getProductDetails = asyncHandler(async(req,res)=>{
-    const product = await Product.findById(req.params.id).then(()=>{
+     await Product.findById(req.params.id).then((product)=>{
         res.json(product)
     }).catch((err)=>{
         console.log(err)
