@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler'
 import User from '../models/User.js';
 
 const authUser = asyncHandler(async(req,res)=>{
-    const {email,password}= req.body;
+    const {email,password,role}= req.body;
     if (email === '' && password === ''){
         res.status(400);
         throw new Error("Enter Email and password")
@@ -16,7 +16,7 @@ const authUser = asyncHandler(async(req,res)=>{
                 res.status(400);
                 throw new Error ('Please enter password')
             }else{
-                if (password===password){
+                if (password===password && role===role){
                     res.json(user)
                 }else{
                     res.status(400);
@@ -29,14 +29,14 @@ const authUser = asyncHandler(async(req,res)=>{
 
 
 const registerUser = asyncHandler(async(req,res)=>{
-    const {firstName,lastName,email,phoneNumber,password,username}= req.body;
+    const {firstName,lastName,email,phoneNumber,password,username,role}= req.body;
     const existingUser = await User.findOne({email});
     if (existingUser){
         res.status(400);
         throw new Error("User with this email already exists")
     }
     const user = await User.create({
-        firstName,lastName,email,password,username,phoneNumber
+        firstName,lastName,email,password,username,phoneNumber,role
     });
      if (user){
         res.status(200).json("Account created")
