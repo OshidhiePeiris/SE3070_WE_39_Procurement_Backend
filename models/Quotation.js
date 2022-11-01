@@ -34,6 +34,10 @@ const quotationSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    approval:{
+      type:Boolean,
+      required:false
+    }
   },
   {
     timestamps: true,

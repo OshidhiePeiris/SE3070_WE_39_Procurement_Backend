@@ -6,6 +6,6 @@ import {
 }from '../controllers/userController.js'
 
 router.route('/').post(registerUser);
-router.route('/signin').get(authUser);
+router.route('/signin').post(authUser);
 
 export default router;

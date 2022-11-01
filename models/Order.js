@@ -49,7 +49,10 @@ const orderSchema = mongoose.Schema(
     paidAt:{
       type:Date
     },
-    
+    approval:{
+      type:Boolean,
+      required:false
+    }
   },
   {
     timestamps: true,

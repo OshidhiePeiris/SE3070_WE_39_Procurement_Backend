@@ -8,7 +8,8 @@ const createQuotation = asyncHandler(async(req,res)=>{
         mobile:req.body.mobile,
         companyName:req.body.companyName,
         companyAddress:req.body.companyAddress,
-        message:req.body.message
+        message:req.body.message,
+        approval:req.body.approval
     });
     const createQuotation = await newQuotation.save();
     res.status(200).json(createQuotation)
@@ -31,9 +32,21 @@ const getQuotationDetails = asyncHandler(async(req,res)=>{
     })
 })
 
+const updateApproval =asyncHandler(async(req,res)=>{
+    const quotation = await Quotation.findById(req.params.id);
+    if(quotation){
+        quotation.approval=true;
+        const update = await quotation.save();
+        res.status(200).json(update)
+    }else{
+        res.status(400);
+        throw new Error('Approved')
+    }
+})
 export {
     createQuotation,
     getQuotations,
     getQuotationDetails,
+    updateApproval
 }
 

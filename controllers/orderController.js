@@ -3,7 +3,7 @@ import Order from '../models/Order.js';
 
 //create order
 const addOrder = asyncHandler(async(req,res)=>{
-    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt} = req.body;
+    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt,approval} = req.body;
     if (orderItems && orderItems.length == 0){
         res.status(400);
         throw new Error('No items')
@@ -16,7 +16,8 @@ const addOrder = asyncHandler(async(req,res)=>{
             isDelivered,
             deliveredAt,
             isPaid,
-            paidAt
+            paidAt,
+            approval
         });
         const createOrder = await newOrder.save();
         res.status(200).json('Order placed')
@@ -36,6 +37,16 @@ const updateOrderStatus = asyncHandler(async(req,res)=>{
     }
     
 })
+
+//get one order
+const getOneOrder = asyncHandler(async(req,res)=>{
+    await Order.findById(req.params.id).then((order)=>{
+        res.json(order)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
 
 //update order to delivered
 const markAsDelivered = asyncHandler(async(req,res)=>{
@@ -125,6 +136,19 @@ const getMyOrders = asyncHandler(async (req, res) => {
     res.json(orders);
   });
 
+
+const updateApproval =asyncHandler(async(req,res)=>{
+    const order = await Order.findById(req.params.id);
+    if(order){
+        order.approval=true;
+        const update = await order.save();
+        res.status(200).json(update)
+    }else{
+        res.status(400);
+        throw new Error('Approved')
+    }
+})
+
 export{
     addOrder,
     updateOrderStatus,
@@ -137,4 +161,6 @@ export{
     countPendingBills,
     countPaidBills,
     getMyOrders,
+    updateApproval,
+    getOneOrder
 }
