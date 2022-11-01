@@ -2,16 +2,16 @@ import asyncHandler from 'express-async-handler'
 import Quotation from '../models/quotation.js';
 const createQuotation = asyncHandler(async(req,res)=>{
     const newQuotation = new Quotation ({
-        firstName,
-        lastName,
-        email,
-        mobile,
-        companyName,
-        companyAddres,
-        message
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        email:req.body.email,
+        mobile:req.body.mobile,
+        companyName:req.body.companyName,
+        companyAddress:req.body.companyAddress,
+        message:req.body.message
     });
     const createQuotation = await newQuotation.save();
-    req.status(200).json({status: 'Your quotation has been sent',createQuotation})
+    res.status(200).json(createQuotation)
     
 })
 

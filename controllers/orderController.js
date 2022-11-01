@@ -3,7 +3,7 @@ import Order from '../models/Order.js';
 
 //create order
 const addOrder = asyncHandler(async(req,res)=>{
-    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt} = req.body;
+    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt} = req.body;
     if (orderItems && orderItems.length == 0){
         res.status(400);
         throw new Error('No items')
@@ -11,13 +11,15 @@ const addOrder = asyncHandler(async(req,res)=>{
         const newOrder = new Order ({
             orderItems,
             siteAddress,
-            totalPrice,
+            totalPrice: totalPrice,
             status,
             isDelivered,
-            deliveredAt
+            deliveredAt,
+            isPaid,
+            paidAt
         });
         const createOrder = await newOrder.save();
-        res.status(200).json({status:'Order placed',createOrder})
+        res.status(200).json('Order placed')
 
     }
 })
@@ -27,7 +29,7 @@ const updateOrderStatus = asyncHandler(async(req,res)=>{
     if (order){
         order.status = req.body.status;
         const updateStatus = order.save();
-        res.json(updateStatus)
+        res.json(order)
     }else {
         res.status(400);
         throw new Error('Order not found')
@@ -79,14 +81,14 @@ const countOrderRequests = asyncHandler(async(req,res)=>{
 //count completed orders
 const countCompletedOrders = asyncHandler(async(req,res)=>{
     await Order.countDocuments(({isDelivered:{$eq:true}})).then((orders)=>{
-        res,json(orders);
+        res.json(orders);
     }).catch((err)=>{
         console.log(err);
     })
 })
 //update paid status
 const updateOrderToPaid = asyncHandler(async(req,res)=>{
-    const order = await Order(req.params.id);
+    const order = await Order.findById(req.params.id);
     if (order){
         order.isPaid = true;
         const updated = await order.save()
@@ -98,7 +100,7 @@ const updateOrderToPaid = asyncHandler(async(req,res)=>{
 //count pending bills
 const countPendingBills = asyncHandler(async(req,res)=>{
     await Order.countDocuments({
-        isPaid:{$eq:"Pending"}
+        isPaid:{$eq:false}
     }).then((orders)=>{
         res.status(200).json(orders)
     }).catch((err)=>{
@@ -108,7 +110,7 @@ const countPendingBills = asyncHandler(async(req,res)=>{
 //count paid bills
 const countPaidBills = asyncHandler(async(req,res)=>{
     await Order.countDocuments({
-        isPaid:{$eq:"Paid"}
+        isPaid:{$eq:true}
     }).then((orders)=>{
         res.status(200).json(orders)
     }).catch((err)=>{

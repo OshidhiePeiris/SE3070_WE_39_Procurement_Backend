@@ -4,7 +4,7 @@ const orderSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: 'User',
     },
     orderItems: [
@@ -31,7 +31,7 @@ const orderSchema = mongoose.Schema(
       default: 0.0,
     },
     status:{
-        type:Boolean,
+        type:String,
         required:true
     },
     isDelivered: {
@@ -43,7 +43,8 @@ const orderSchema = mongoose.Schema(
       type: Date,
     },
     isPaid :{
-      type:Boolean
+      type:Boolean,
+      required:false
     },
     paidAt:{
       type:Date
@@ -55,6 +56,13 @@ const orderSchema = mongoose.Schema(
   }
 );
 
+orderSchema.methods.calculatePrice = async function(){
+  let tot;
+  for(let i=0; i<orderItems.length;i++){
+    tot += orderItems[i].price * orderItems[i].quantity
+  }
+  return tot;
+}
 const Order = mongoose.model('Order', orderSchema);
 
 export default Order;
