@@ -7,7 +7,7 @@ import {
     getProductDetails,
 
 
-}from '../controllers/productController'
+}from '../controllers/productController.js'
 
 
 const router = express.Router()

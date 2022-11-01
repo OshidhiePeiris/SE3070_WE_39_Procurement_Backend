@@ -31,7 +31,7 @@ const quotationSchema = mongoose.Schema(
       required: true,
     },
     message: {
-      type: string,
+      type: String,
       required: false,
     },
   },

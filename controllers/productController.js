@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import Product  from '../models/Product';
+import Product  from '../models/Product.js';
 
 //create product
 const createProduct = asyncHandler(async(req,res)=>{
@@ -7,7 +7,7 @@ const createProduct = asyncHandler(async(req,res)=>{
         name : 'Product',
         image:'images/sample.jpg',
         supplier:'Supplier',
-        supplierMobile : 0000000000,
+        supplierMobile : 0,
         description: 'Product description',
         price: 0,
         quantity: 0

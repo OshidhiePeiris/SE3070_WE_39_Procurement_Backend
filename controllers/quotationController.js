@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler'
-import Quotation from '../models/quotation';
+import Quotation from '../models/quotation.js';
 const createQuotation = asyncHandler(async(req,res)=>{
     const newQuotation = new Quotation ({
         firstName,

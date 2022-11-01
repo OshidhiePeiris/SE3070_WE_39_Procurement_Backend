@@ -12,7 +12,7 @@ import {
     countPendingBills,
     countPaidBills,
     getMyOrders
-} from  '../controllers/orderController';
+} from  '../controllers/orderController.js';
 
 router.route('/').post(addOrder);
 router.route('/myorders').get(getMyOrders);
@@ -22,7 +22,7 @@ router.route('/orderrequests').get(countOrderRequests);
 router.route('/completed').get(countCompletedOrders);
 router.route('/updatepaid/:id').put(updateOrderToPaid);
 router.route('/pendingbills').get(countPendingBills);
-router.routr('/paidbills').get(countPaidBills)
+router.route('/paidbills').get(countPaidBills)
 router.route('/updatestatus/:id').put(updateOrderStatus)
 router.route('/mark/:id').put(markAsDelivered)
 
