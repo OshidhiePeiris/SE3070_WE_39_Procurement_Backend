@@ -3,10 +3,11 @@ import User from '../models/User.js';
 
 const authUser = asyncHandler(async(req,res)=>{
     const {email,password,role}= req.body;
-    if (email === '' && password === ''){
+    if (((email !== null && password == null))|| (email == null && password !== null)){
         res.status(400);
-        throw new Error("Enter Email and password")
+        throw new Error("Enter Email or password")
     }else{
+        if(email!==null && password!==password){}
         const user = await User.findOne({email});
         if (!user){
             res.status(400);
@@ -16,7 +17,7 @@ const authUser = asyncHandler(async(req,res)=>{
                 res.status(400);
                 throw new Error ('Please enter password')
             }else{
-                if (password===password && role===role){
+                if (password===password || role===role){
                     res.json(user)
                 }else{
                     res.status(400);
