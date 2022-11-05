@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/User.js';
 
+// User 
 const authUser = asyncHandler(async(req,res)=>{
     const {email,password,role}= req.body;
     if (((email !== null && password == null))|| (email == null && password !== null)){
@@ -46,8 +47,15 @@ const registerUser = asyncHandler(async(req,res)=>{
      }
 })
 
-
+const getUsers = asyncHandler(async(req,res)=>{
+    await User.find().then((users)=>{
+        res.json(users)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
 export {
     authUser,
     registerUser,
+    getUsers
 }
