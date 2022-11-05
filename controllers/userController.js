@@ -37,7 +37,7 @@ const registerUser = asyncHandler(async(req,res)=>{
         throw new Error("User with this email already exists")
     }
     const user = await User.create({
-        firstName,lastName,email,password,username,phoneNumber,role
+        empID,name,email,password,phoneNumber,role
     });
      if (user){
         res.status(200).json("Account created")

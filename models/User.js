@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema(
   {
-    firstName: {
+    empID: {
       type: String,
       required: true,
     },
-    lastName: {
+    name: {
         type: String,
         required: true,
       },
@@ -21,10 +21,7 @@ const userSchema = mongoose.Schema(
         required: true,
         unique: true,
     },
-    userName:{
-        type:String,
-        required:false
-    },
+    
     password: {
       type: String,
       required: true,
