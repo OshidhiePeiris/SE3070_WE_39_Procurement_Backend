@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/User.js';
 
-// User 
+// User sign in
 const authUser = asyncHandler(async(req,res)=>{
     const {email,password,role}= req.body;
     if (((email !== null && password == null))|| (email == null && password !== null)){
@@ -15,10 +15,10 @@ const authUser = asyncHandler(async(req,res)=>{
                 throw new Error ("User with this email does not exist")
             }else{
                
-                    if (password===user.password || role===user.role){
+                    if (password===user.password|| role===user.role){
                         res.json(user)
                     }else{
-                        res.status(400);
+                        res.status(200);
                         throw new Error('invalid role or password')
                     }
                 
@@ -29,7 +29,7 @@ const authUser = asyncHandler(async(req,res)=>{
     }
 })
 
-
+// user sign up
 const registerUser = asyncHandler(async(req,res)=>{
     const {empID,name,email,password,phoneNumber,role}= req.body;
     const existingUser = await User.findOne({email});
@@ -47,6 +47,7 @@ const registerUser = asyncHandler(async(req,res)=>{
      }
 })
 
+//retrieve all users
 const getUsers = asyncHandler(async(req,res)=>{
     await User.find().then((users)=>{
         res.json(users)

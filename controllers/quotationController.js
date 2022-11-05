@@ -1,5 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Quotation from '../models/quotation.js';
+
+//request quotations
 const createQuotation = asyncHandler(async(req,res)=>{
     const newQuotation = new Quotation ({
         firstName:req.body.firstName,
@@ -15,7 +17,7 @@ const createQuotation = asyncHandler(async(req,res)=>{
     res.status(200).json(createQuotation)
     
 })
-
+//get all quotations
 const getQuotations = asyncHandler (async(req,res)=>{
     await Quotation.find().then((quotes)=>{
         res.json(quotes)
@@ -24,6 +26,7 @@ const getQuotations = asyncHandler (async(req,res)=>{
     })
 })
 
+//get quotation details
 const getQuotationDetails = asyncHandler(async(req,res)=>{
     await Quotation.findById(req.params.id).then((quote)=>{
         res.json(quote);
@@ -32,6 +35,7 @@ const getQuotationDetails = asyncHandler(async(req,res)=>{
     })
 })
 
+//update approval status
 const updateApproval =asyncHandler(async(req,res)=>{
     const quotation = await Quotation.findById(req.params.id);
     if(quotation){

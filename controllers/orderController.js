@@ -136,7 +136,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
     res.json(orders);
   });
 
-
+//Approve order
 const updateApproval =asyncHandler(async(req,res)=>{
     const order = await Order.findById(req.params.id);
     if(order){
