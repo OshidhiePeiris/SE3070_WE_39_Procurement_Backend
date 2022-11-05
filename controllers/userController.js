@@ -7,24 +7,24 @@ const authUser = asyncHandler(async(req,res)=>{
         res.status(400);
         throw new Error("Enter Email or password")
     }else{
-        if(email!==null && password!==password){}
-        const user = await User.findOne({email});
-        if (!user){
-            res.status(400);
-            throw new Error ("User with this email does not exist")
-        }else{
-            if(password===''){
+        if(email!==null && password!==null){
+            const user = await User.findOne({email});
+            if (!user){
                 res.status(400);
-                throw new Error ('Please enter password')
+                throw new Error ("User with this email does not exist")
             }else{
-                if (password===password || role===role){
-                    res.json(user)
-                }else{
-                    res.status(400);
-                    throw new Error('invalid role or password')
-                }
+               
+                    if (password===user.password || role===user.role){
+                        res.json(user)
+                    }else{
+                        res.status(400);
+                        throw new Error('invalid role or password')
+                    }
+                
             }
         }
+     
+       
     }
 })
 
