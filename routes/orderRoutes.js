@@ -14,7 +14,8 @@ import {
     getMyOrders,
     updateApproval,
     getOneOrder,
-    approvedorders
+    approvedorders,
+    getApprovedOrders
     
 } from  '../controllers/orderController.js';
 
@@ -32,6 +33,7 @@ router.route('/mark/:id').put(markAsDelivered)
 router.route('/approval/:id').put(updateApproval)
 router.route('/:id').get(getOneOrder);
 router.route('/approved').get(approvedorders)
+router.route('/').get(getApprovedOrders);
 
 export default router;
 

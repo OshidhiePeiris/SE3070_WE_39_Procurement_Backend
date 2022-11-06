@@ -160,6 +160,15 @@ const approvedorders = asyncHandler(async(req,res)=>{
     })
 })
 
+const getApprovedOrders = asyncHandler(async(req,res)=>{
+    await Order.find({approval:true}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.log(err)
+        throw new Error("no")
+    })
+})
+
 export{
     addOrder,
     updateOrderStatus,
@@ -174,6 +183,7 @@ export{
     getMyOrders,
     updateApproval,
     getOneOrder,
-    approvedorders
+    approvedorders,
+    getApprovedOrders
     
 }
