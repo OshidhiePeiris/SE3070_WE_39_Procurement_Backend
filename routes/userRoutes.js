@@ -4,7 +4,7 @@ import {
     authUser,
     registerUser,
     getUsers
-}from '../controllers/userController.js'
+} from '../controllers/userController.js'
 
 router.route('/').post(registerUser);
 router.route('/signin').post(authUser);

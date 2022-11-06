@@ -15,9 +15,11 @@ import {
     updateApproval,
     getOneOrder,
     approvedorders,
-    getApprovedOrders
-    
-} from  '../controllers/orderController.js';
+    getApprovedOrders,
+    getDeclined,
+    getDelivered
+
+} from '../controllers/orderController.js';
 
 router.route('/').post(addOrder);
 router.route('/myorders').get(getMyOrders);
@@ -34,6 +36,7 @@ router.route('/approval/:id').put(updateApproval)
 router.route('/:id').get(getOneOrder);
 router.route('/approved').get(approvedorders)
 router.route('/').get(getApprovedOrders);
-
+router.route('/get/declined').get(getDeclined),
+    router.route('/get/delivered').get(getDelivered)
 export default router;
 

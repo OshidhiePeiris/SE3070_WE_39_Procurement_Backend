@@ -22,19 +22,19 @@ const orderSchema = mongoose.Schema(
       },
     ],
     siteAddress: {
-     type:String,
-     required:false
+      type: String,
+      required: false
     },
-   
+
     totalPrice: {
       type: Number,
       required: false,
       default: 0.0,
     },
-    status:{
-        type:String,
-        required:false,
-        default:"Pending"
+    status: {
+      type: String,
+      required: false,
+      default: "Pending"
     },
     isDelivered: {
       type: Boolean,
@@ -44,31 +44,31 @@ const orderSchema = mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
-    isPaid :{
-      type:Boolean,
-      required:false,
-      default:false
+    isPaid: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-    paidAt:{
-      type:Date
+    paidAt: {
+      type: Date
     },
-    approval:{
-      type:Boolean,
-      required:false,
-      default:false
+    approval: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-   
-    deadlineDate : {
-      type : Date ,
-      required : false
+
+    deadlineDate: {
+      type: Date,
+      required: false
     },
-    productID :{
-      type : String,
-      required:false
+    productID: {
+      type: String,
+      required: false
     },
-    quantity:{
-      type:Number,
-      required:false
+    quantity: {
+      type: Number,
+      required: false
     }
   },
   {
@@ -76,9 +76,9 @@ const orderSchema = mongoose.Schema(
   }
 );
 
-orderSchema.methods.calculatePrice = async function(){
+orderSchema.methods.calculatePrice = async function () {
   let tot;
-  for(let i=0; i<orderItems.length;i++){
+  for (let i = 0; i < orderItems.length; i++) {
     tot += orderItems[i].price * orderItems[i].quantity
   }
   return tot;

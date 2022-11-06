@@ -6,7 +6,7 @@ import {
     getQuotationDetails,
     getQuotations,
     updateApproval
-}from '../controllers/quotationController.js'
+} from '../controllers/quotationController.js'
 
 router.route('/').get(getQuotations);
 router.route('/addquote').post(createQuotation);

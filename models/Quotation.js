@@ -25,7 +25,7 @@ const quotationSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-   
+
     companyAddress: {
       type: String,
       required: true,
@@ -34,9 +34,9 @@ const quotationSchema = mongoose.Schema(
       type: String,
       required: false,
     },
-    approval:{
-      type:Boolean,
-      required:false
+    approval: {
+      type: Boolean,
+      required: false
     }
   },
   {
