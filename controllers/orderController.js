@@ -3,7 +3,7 @@ import Order from '../models/Order.js';
 
 //create order
 const addOrder = asyncHandler(async(req,res)=>{
-    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt,approval,deadlineDate} = req.body;
+    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt,approval,deadlineDate,productID,quantity} = req.body;
     
     if (orderItems && orderItems.length == 0){
         res.status(400);
@@ -153,7 +153,7 @@ const updateApproval =asyncHandler(async(req,res)=>{
     }
 })
 const approvedorders = asyncHandler(async(req,res)=>{
-    await Order.find({approval : true}).then((orders)=>{
+    Order.find({approval : {$eq:true}},{_id:0}).then((orders)=>{
         res.json(orders)
     }).catch((err)=>{
         console.logI(err)
