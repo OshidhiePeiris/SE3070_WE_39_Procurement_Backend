@@ -22,8 +22,6 @@ const addOrder = asyncHandler(async(req,res)=>{
             deadlineDate
         });
         const createOrder = await newOrder.save();
-        createOrder.getDeadline(createOrder.deadline,createOrder.createdAt)
-        createOrder.save()
         res.status(200).json('Order placed')
 
     }

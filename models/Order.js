@@ -61,6 +61,14 @@ const orderSchema = mongoose.Schema(
     deadlineDate : {
       type : Date ,
       required : false
+    },
+    productID :{
+      type : String,
+      required:false
+    },
+    quantity:{
+      type:Number,
+      required:false
     }
   },
   {
@@ -74,28 +82,6 @@ orderSchema.methods.calculatePrice = async function(){
     tot += orderItems[i].price * orderItems[i].quantity
   }
   return tot;
-}
-
-orderSchema.methods.getDeadline =  async function(amount,createdAt){
-  let deadlineDate ;
-  deadlineDate =Order.aggregate([
-    {
-      $dateAdd:{
-        startDate : createdAt,
-        unit: "day",
-        amount : amount
-      }
-    }
-  
-  ])
-  return deadlineDate;
-  
-  
-
-
-  
-
-   
 }
 const Order = mongoose.model('Order', orderSchema);
 
