@@ -3,7 +3,8 @@ import Order from '../models/Order.js';
 
 //create order
 const addOrder = asyncHandler(async(req,res)=>{
-    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt,approval} = req.body;
+    const {orderItems, siteAddress,totalPrice,status,isDelivered,deliveredAt,isPaid,paidAt,approval,deadlineDate} = req.body;
+    
     if (orderItems && orderItems.length == 0){
         res.status(400);
         throw new Error('No items')
@@ -17,9 +18,12 @@ const addOrder = asyncHandler(async(req,res)=>{
             deliveredAt,
             isPaid,
             paidAt,
-            approval
+            approval,
+            deadlineDate
         });
         const createOrder = await newOrder.save();
+        createOrder.getDeadline(createOrder.deadline,createOrder.createdAt)
+        createOrder.save()
         res.status(200).json('Order placed')
 
     }
@@ -148,6 +152,13 @@ const updateApproval =asyncHandler(async(req,res)=>{
         throw new Error('Approved')
     }
 })
+const approvedorders = asyncHandler(async(req,res)=>{
+    await Order.find({approval : true}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.logI(err)
+    })
+})
 
 export{
     addOrder,
@@ -162,5 +173,7 @@ export{
     countPaidBills,
     getMyOrders,
     updateApproval,
-    getOneOrder
+    getOneOrder,
+    approvedorders
+    
 }

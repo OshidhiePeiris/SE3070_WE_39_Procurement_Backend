@@ -13,7 +13,9 @@ import {
     countPaidBills,
     getMyOrders,
     updateApproval,
-    getOneOrder
+    getOneOrder,
+    approvedorders
+    
 } from  '../controllers/orderController.js';
 
 router.route('/').post(addOrder);
@@ -29,5 +31,7 @@ router.route('/updatestatus/:id').put(updateOrderStatus)
 router.route('/mark/:id').put(markAsDelivered)
 router.route('/approval/:id').put(updateApproval)
 router.route('/:id').get(getOneOrder);
+router.route('/approved').get(approvedorders)
+
 export default router;
 

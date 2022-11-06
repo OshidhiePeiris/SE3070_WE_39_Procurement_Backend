@@ -7,32 +7,34 @@ const orderSchema = mongoose.Schema(
       required: false,
       ref: 'User',
     },
+    //orderItems is an array
     orderItems: [
       {
-        name: { type: String, required: true },
-        quantity: { type: Number, required: true },
-        image: { type: String, required: true },
-        price: { type: Number, required: true },
+        name: { type: String, required: false },
+        quantity: { type: Number, required: false },
+        image: { type: String, required: false },
+        price: { type: Number, required: false },
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          required: true,
+          required: false,
           ref: 'Product',
         },
       },
     ],
     siteAddress: {
      type:String,
-     required:true
+     required:false
     },
    
     totalPrice: {
       type: Number,
-      required: true,
+      required: false,
       default: 0.0,
     },
     status:{
         type:String,
-        required:true
+        required:false,
+        default:"Pending"
     },
     isDelivered: {
       type: Boolean,
@@ -44,14 +46,21 @@ const orderSchema = mongoose.Schema(
     },
     isPaid :{
       type:Boolean,
-      required:false
+      required:false,
+      default:false
     },
     paidAt:{
       type:Date
     },
     approval:{
       type:Boolean,
-      required:false
+      required:false,
+      default:false
+    },
+   
+    deadlineDate : {
+      type : Date ,
+      required : false
     }
   },
   {
@@ -65,6 +74,28 @@ orderSchema.methods.calculatePrice = async function(){
     tot += orderItems[i].price * orderItems[i].quantity
   }
   return tot;
+}
+
+orderSchema.methods.getDeadline =  async function(amount,createdAt){
+  let deadlineDate ;
+  deadlineDate =Order.aggregate([
+    {
+      $dateAdd:{
+        startDate : createdAt,
+        unit: "day",
+        amount : amount
+      }
+    }
+  
+  ])
+  return deadlineDate;
+  
+  
+
+
+  
+
+   
 }
 const Order = mongoose.model('Order', orderSchema);
 
