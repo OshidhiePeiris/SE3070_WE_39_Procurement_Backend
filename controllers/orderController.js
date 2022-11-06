@@ -19,7 +19,9 @@ const addOrder = asyncHandler(async(req,res)=>{
             isPaid,
             paidAt,
             approval,
-            deadlineDate
+            deadlineDate,
+            productID,
+            quantity
         });
         const createOrder = await newOrder.save();
         res.status(200).json('Order placed')
